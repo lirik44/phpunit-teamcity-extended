@@ -17,7 +17,7 @@
         "phpunit/phpunit": "^9.0"
     },
     "replace": {
-        "phpunit/phpunit/src/Util/Log/TeamCity.php": "lirik44/phpunit-teamcity-extended/src/TeamCity.php"
+        "phpunit/phpunit/src/Util/Log/TeamCity.php": "phpunit-teamcity-extended/src/TeamCity.php"
     },
     "autoload": {
         "psr-4": {
