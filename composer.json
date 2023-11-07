@@ -16,9 +16,6 @@
         "php": "^7.1|^8.0",
         "phpunit/phpunit": "^9.0"
     },
-    "replace": {
-        "phpunit/phpunit/src/Util/Log/TeamCity.php": "phpunit-teamcity-extended/src/TeamCity.php"
-    },
     "autoload": {
         "psr-4": {
             "PHPUnitTeamcity\\": "src/"
