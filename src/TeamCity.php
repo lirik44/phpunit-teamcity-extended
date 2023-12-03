@@ -75,27 +75,27 @@ final class TeamCity extends DefaultResultPrinter
                 'duration' => self::toMilliseconds($time),
             ]
         );
-        //Publish error screenshot into teamcity, $test->errorScreen should contains image file
-        $this->write("\n##teamcity[publishArtifacts './report/screenshots/$test->errorScreen => ./screenshots']\n");
+        //Publish error screenshot into teamcity, $test->screenshotErr should contains image file
+        $this->write("\n##teamcity[publishArtifacts './report/screenshots/$test->screenshotErr => ./screenshots']\n");
         //Attach failure screenshot for teamcity report
         $this->printEventWithoutFlow(
             'testMetadata',
             [
                 'testName' => $test->getName(),
                 'type'     => 'image',
-                'value'    => './screenshots/'.$test->errorScreen,
+                'value'    => './screenshots/'.$test->screenshotErr,
                 'name'     => 'Screenshot',
             ]
         );
-        //Publish browser link, where error occur, $test->errorLink should contains link string
-        if ($test->errorLink != NULL) {
+        //Publish browser link, where error occur, $test->browserLink should contains link string
+        if ($test->browserLink != NULL) {
             $this->printEventWithoutFlow(
                 'testMetadata',
                 [
                     'testName' => $test->getName(),
                     'name'     => 'URL',
                     'type'     => 'link',
-                    'value'    => $test->errorLink,
+                    'value'    => $test->browserLink,
                 ]
             );
         }
@@ -111,14 +111,14 @@ final class TeamCity extends DefaultResultPrinter
             );
         }
         //Publish php_error.log data, you can GREP any log file in $test->phpErrorLog variable
-        if ($test->phpErrorLog != NULL) {
-            $this->write("\n##teamcity[publishArtifacts './report/logs/$test->phpErrorLog => ./logs']\n");
+        if ($test->errLog != NULL) {
+            $this->write("\n##teamcity[publishArtifacts './report/logs/$test->errLog => ./logs']\n");
             $this->printEventWithoutFlow(
                 'testMetadata',
                 [
                     'testName' => $test->getName(),
                     'type'     => 'artifact',
-                    'value'    => './logs/'.$test->phpErrorLog,
+                    'value'    => './logs/'.$test->errLog,
                     'name'     => 'php_error.log',
                 ]
             );
@@ -191,27 +191,27 @@ final class TeamCity extends DefaultResultPrinter
         }
         //Publish error stacktrace
         $this->printEvent('testFailed', $parameters);
-        //Publish error screenshot into teamcity, $test->errorScreen should contains image file
-        $this->write("\n##teamcity[publishArtifacts './report/screenshots/$test->errorScreen => ./screenshots']\n");
+        //Publish error screenshot into teamcity, $test->screenshotErr should contains image file
+        $this->write("\n##teamcity[publishArtifacts './report/screenshots/$test->screenshotErr => ./screenshots']\n");
         //Attach failure screenshot for teamcity report
         $this->printEventWithoutFlow(
             'testMetadata',
             [
                 'testName' => $test->getName(),
                 'type'     => 'image',
-                'value'    => './screenshots/'.$test->errorScreen,
+                'value'    => './screenshots/'.$test->screenshotErr,
                 'name'     => 'Screenshot',
             ]
         );
-        //Publish browser link, where error occur, $test->errorLink should contains link string
-        if ($test->errorLink != NULL) {
+        //Publish browser link, where error occur, $test->browserLink should contains link string
+        if ($test->browserLink != NULL) {
             $this->printEventWithoutFlow(
                 'testMetadata',
                 [
                     'testName' => $test->getName(),
                     'name'     => 'URL',
                     'type'     => 'link',
-                    'value'    => $test->errorLink,
+                    'value'    => $test->browserLink,
                 ]
             );
         }
@@ -228,15 +228,15 @@ final class TeamCity extends DefaultResultPrinter
             );
         }
 
-        //Publish php_error.log data, you can GREP any log file in $test->phpErrorLog variable
-        if ($test->phpErrorLog != NULL) {
-            $this->write("\n##teamcity[publishArtifacts './report/logs/$test->phpErrorLog => ./logs']\n");
+        //Publish php_error.log data, you can GREP any log file in $test->errLog variable
+        if ($test->errLog != NULL) {
+            $this->write("\n##teamcity[publishArtifacts './report/logs/$test->errLog => ./logs']\n");
             $this->printEventWithoutFlow(
                 'testMetadata',
                 [
                     'testName' => $test->getName(),
                     'type'     => 'artifact',
-                    'value'    => './logs/'.$test->phpErrorLog,
+                    'value'    => './logs/'.$test->errLog,
                     'name'     => 'php_error.log',
                 ]
             );
@@ -401,8 +401,8 @@ final class TeamCity extends DefaultResultPrinter
                 'duration' => self::toMilliseconds($time),
             ]
         );
-        //Get git branch into $test->appBranch variable and publish in Teamcity as a BuildTag
-        $this->write("\n##teamcity[addBuildTag '$test->appBranch']\n");
+        //Get git branch into $test->buildTag variable and publish in Teamcity as a BuildTag
+        $this->write("\n##teamcity[addBuildTag '$test->buildTag']\n");
     }
 
     protected function writeProgress(string $progress): void

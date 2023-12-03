@@ -34,8 +34,8 @@ class SeleniumHelper extends TestCase
     
     public function setUp():void
     {
-        $nameOfTest=$this->getName();
-        $this->testHelper->setupSeleniumSession($nameOfTest);
+        $testName=$this->getName();
+        $this->testHelper->setupSeleniumSession($testName);
         date_default_timezone_set( 'Europe/Moscow' );
     }
     
@@ -50,7 +50,7 @@ class SeleniumHelper extends TestCase
             $this->description = $this->getTestDescription();
         }
 ```
-## Other options
+## Other testMetadata features
 
 ### Similar as a description you can specify different testMetadata in teadDown() section:
 ```php
@@ -60,13 +60,13 @@ public function tearDown():void
         if ($this->hasFailed())
         {
             //Get browser URL in the moment of test error occur
-            $this->errorLink = $this->webDriver->getCurrentURL();
+            $this->browserLink = $this->webDriver->getCurrentURL();
             //Get browser screenshot in the moment of test error occur
-            $this->errorScreen = $this->testHelper->getErrorScreenshot($nameOfTest);
+            $this->screenshotErr = $this->testHelper->getErrorScreenshot($testName);
             //Get php_errors.log after test fails
-            $this->phpErrorLog = $this->testHelper->getPhpErrorLog($nameOfTest);
+            $this->errLog = $this->testHelper->getPhpErrorLog($testName);
             //Get mono.log after test fails
-            $this->monoLog = $this->testHelper->getMonoLog($nameOfTest);
+            $this->monoLog = $this->testHelper->getMonoLog($testName);
             }
         }
 ```
@@ -74,10 +74,10 @@ public function tearDown():void
 ```php
 public function setUp():void
     {
-        $nameOfTest=$this->getName();
-        $this->testHelper->setupSeleniumSession($nameOfTest);
+        $testName=$this->getName();
+        $this->testHelper->setupSeleniumSession($testName);
         date_default_timezone_set( 'Europe/Moscow' );
         //Get current application git branch
-        $this->appBranch = $this->getUsedBranch();
+        $this->buildTag = $this->getUsedBranch();
     }
 ```
